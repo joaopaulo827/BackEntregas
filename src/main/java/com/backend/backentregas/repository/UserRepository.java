@@ -21,7 +21,6 @@ import org.springframework.stereotype.Repository;
 public class UserRepository {
 public List<UserDTO> listaUsuarios() {
     List<UserDTO> lista = new ArrayList<>();
-
     try {
         Connection conn = Conexao.conectar();
         PreparedStatement stmt =null;
@@ -43,6 +42,23 @@ public List<UserDTO> listaUsuarios() {
     }
         return lista;
 }
+    public void register(UserDTO user) {
+        try {
+            Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement("insert into usuarios (nome, email, senha, role) values (?, ?, ?, ?)");
+            stmt.setString(1, user.getNome());
+            stmt.setString(2, user.getEmail());
+            stmt.setString(3, user.getSenha());
+            stmt.setString(4, user.getRole());
+
+            int AffectedRows = stmt.executeUpdate();
+            if (AffectedRows == 0) {
+                throw new SQLException("Falha na atualização - Nenhuma linha foi encontrada.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public UserDTO login(String email, String senha) {
         UserDTO user = new UserDTO();
         try {

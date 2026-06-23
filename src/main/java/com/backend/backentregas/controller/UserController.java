@@ -4,6 +4,7 @@
  */
 package com.backend.backentregas.controller;
 
+import com.backend.backentregas.model.UserDTO;
 import com.backend.backentregas.model.UserRequestDTO;
 import com.backend.backentregas.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,12 @@ public class UserController {
      @Autowired
     private UserService userService;
      
+         @PostMapping("/registrar")
+    public String registrar(@RequestBody UserDTO user) {
+        userService.register(user);
+        return "Cadastro realizado com sucesso!";
+    }
+    
     @PostMapping("/logar")
     public String logar(@RequestBody UserRequestDTO user) {
         userService.logar(user);
