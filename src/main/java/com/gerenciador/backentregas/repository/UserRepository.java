@@ -1,0 +1,84 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.gerenciador.backentregas.repository;
+
+import com.gerenciador.backentregas.model.UserDTO;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import org.springframework.stereotype.Repository;
+
+/**
+ *
+ * @author joaop
+ */
+@Repository
+public class UserRepository {
+public List<UserDTO> listaUsuarios() {
+    List<UserDTO> lista = new ArrayList<>();
+    try {
+        Connection conn = Conexao.conectar();
+        PreparedStatement stmt =null;
+        ResultSet rs = null;
+        stmt= conn.prepareStatement("select * from usuarios");
+        rs= stmt.executeQuery();
+        while (rs.next()) {
+            UserDTO usuarios = new UserDTO();
+            usuarios.setId(rs.getLong("id"));
+            usuarios.setNome(rs.getString("nome"));
+            usuarios.setEmail(rs.getString("email"));
+            usuarios.setSenha(rs.getString("senha"));
+            usuarios.setRole(rs.getString("role"));
+            lista.add(usuarios);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+        return lista;
+}
+    public void register(UserDTO user) {
+        try {
+            Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement("insert into usuarios (nome, email, senha, role) values (?, ?, ?, ?)");
+            stmt.setString(1, user.getNome());
+            stmt.setString(2, user.getEmail());
+            stmt.setString(3, user.getSenha());
+            stmt.setString(4, user.getRole());
+
+            int AffectedRows = stmt.executeUpdate();
+            if (AffectedRows == 0) {
+                throw new SQLException("Falha na atualização - Nenhuma linha foi encontrada.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public UserDTO login(String email, String senha) {
+        UserDTO user = new UserDTO();
+        try {
+            Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement("select * from usuarios where email = ? and senha = ?");
+            stmt.setString(1, email);
+            stmt.setString(2, senha);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                user.setId(rs.getLong("id"));
+                user.setNome(rs.getString("nome"));
+                user.setEmail(rs.getString("email"));
+                user.setSenha(rs.getString("senha"));
+                user.setRole(rs.getString("role"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+}
