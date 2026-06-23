@@ -9,34 +9,34 @@ package com.gerenciador.backentregas.model;
  * @author joaop
  */
 public class MotoDTO {
-    private int id;
-    private int usuario_id;
+    private Long id;
+    private Long usuario_id;
     private String nome;
     private String status;
 
     public MotoDTO() {
     }
 
-    public MotoDTO(int id, int usuario_id, String nome, String status) {
+    public MotoDTO(Long id, Long usuario_id, String nome, String status) {
         this.id = id;
         this.usuario_id = usuario_id;
         this.nome = nome;
         this.status = status;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getUsuario_id() {
+    public Long getUsuario_id() {
         return usuario_id;
     }
 
-    public void setUsuario_id(int usuario_id) {
+    public void setUsuario_id(Long usuario_id) {
         this.usuario_id = usuario_id;
     }
 
