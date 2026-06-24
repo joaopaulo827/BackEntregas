@@ -27,7 +27,7 @@ public class MotoService {
 
     public List<MotoDTO> listaMoto(String authHeader) {
         if (tokenService.validarToken(authHeader)) {
-            return motoRepository.listaUsuarios();
+            return motoRepository.listaMoto();
         } else {
             throw new ResponseStatusException(HttpStatusCode.valueOf(401), "Token inválido!");
         }

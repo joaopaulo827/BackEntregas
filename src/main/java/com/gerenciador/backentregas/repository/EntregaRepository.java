@@ -5,7 +5,7 @@
 package com.gerenciador.backentregas.repository;
 
 
-import com.gerenciador.backentregas.model.MotoDTO;
+import com.gerenciador.backentregas.model.EntregaDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,22 +19,23 @@ import org.springframework.stereotype.Repository;
  * @author joaop
  */
 @Repository
-public class MotoRepository {
-public List<MotoDTO> listaMoto() {
-    List<MotoDTO> lista = new ArrayList<>();
+public class EntregaRepository {
+public List<EntregaDTO> listaEntregas() {
+    List<EntregaDTO> lista = new ArrayList<>();
     try {
         Connection conn = Conexao.conectar();
         PreparedStatement stmt =null;
         ResultSet rs = null;
-        stmt= conn.prepareStatement("select * from motoristas");
+        stmt= conn.prepareStatement("select * from entregas");
         rs= stmt.executeQuery();
         while (rs.next()) {
-            MotoDTO motoristas = new MotoDTO();
-            motoristas.setId(rs.getLong("id"));
-            motoristas.setUsuario_id(rs.getLong("usuario_id"));
-            motoristas.setNome(rs.getString("nome"));
-            motoristas.setStatus(rs.getString("status"));
-            lista.add(motoristas);
+            EntregaDTO entregas = new EntregaDTO();
+            entregas.setId(rs.getLong("id"));
+            entregas.setCliente_id(rs.getLong("cliente_id"));
+            entregas.setNome(rs.getString("nome"));
+            entregas.setDescricao(rs.getString("descricao"));
+            entregas.setStatus(rs.getString("status"));
+            lista.add(entregas);
         }
 
     } catch (SQLException e) {
@@ -42,13 +43,14 @@ public List<MotoDTO> listaMoto() {
     }
         return lista;
 }
-    public void register(MotoDTO moto) {
+    public int register(EntregaDTO entrega) {
         try {
             Connection conn = Conexao.conectar();
-            PreparedStatement stmt = conn.prepareStatement("insert into motoristas (usuario_id, nome, status) values (?, ?, ?)");
-            stmt.setLong(1, moto.getUsuario_id());
-            stmt.setString(2, moto.getNome());
-            stmt.setString(3, moto.getStatus());
+            PreparedStatement stmt = conn.prepareStatement("insert into entregas (cliente_id, nome,descricao, status) values (?, ?, ?, ?)");
+            stmt.setLong(1, entrega.getCliente_id());
+            stmt.setString(2, entrega.getNome());
+            stmt.setString(3, entrega.getDescricao());
+            stmt.setString(4, entrega.getStatus());
 
             int AffectedRows = stmt.executeUpdate();
             if (AffectedRows == 0) {
@@ -57,5 +59,6 @@ public List<MotoDTO> listaMoto() {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }    
+         return 0;
+    } 
 }

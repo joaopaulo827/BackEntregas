@@ -4,8 +4,10 @@
  */
 package com.gerenciador.backentregas.controller;
 
-import com.gerenciador.backentregas.model.MotoDTO;
-import com.gerenciador.backentregas.service.MotoService;
+
+
+import com.gerenciador.backentregas.model.EntregaDTO;
+import com.gerenciador.backentregas.service.EntregaService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,15 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api/auth")
-public class MotoController {
-
+public class EntregaController {
     @Autowired
-    private MotoService motoService;
-    @GetMapping("/motorista")
-    public List<MotoDTO> listaMoto(
+    private EntregaService entregaService;
+    @GetMapping("/entrega")
+    public List<EntregaDTO> listaEdital(
             @RequestHeader("Authorization") String authHeader) {
 
         String token = authHeader.replace("Bearer ", "");
-        return motoService.listaMoto(token);
-    }
+        return entregaService.listaEntrega(token);
+    }    
 }
