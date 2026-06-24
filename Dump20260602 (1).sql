@@ -24,4 +24,15 @@ CREATE TABLE motoristas (
     REFERENCES usuarios(id)
 );
 INSERT INTO motoristas VALUES
-(1, 3, 'Driver Road', 'ATIVO');   
+(1, 3, 'Driver Road', 'ATIVO'); 
+
+CREATE TABLE entrega (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    cliente_id BIGINT,
+    nome VARCHAR(150) NOT NULL,
+    descricao varchar(150),
+    status ENUM('ENTREGUE','EM ANDAMENTO','NAO ENTREGUE') DEFAULT 'NAO ENTREGUE',
+	
+    FOREIGN KEY (cliente_id)
+    REFERENCES usuarios(id)
+);
