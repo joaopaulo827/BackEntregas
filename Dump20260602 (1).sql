@@ -83,7 +83,7 @@ CREATE TABLE `usuarios` (
   `nome` varchar(150) NOT NULL,
   `email` varchar(150) NOT NULL,
   `senha` varchar(255) NOT NULL,
-  `role` enum('ADMIN','OPERADOR','MOTORISTA','SUPERVISOR') NOT NULL,
+  `role` enum('ADMIN','OPERADOR','MOTORISTA') NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -95,7 +95,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'Admin System','admin@transportadora.com','123456','ADMIN'),(2,'Operation Solutions','operation@transportadora.com','205689','OPERADOR'),(3,'Driver Road','driver@transportadora.com','325690','MOTORISTA'),(4,'Supervisor Aware','visor@transportadora.com','586410','SUPERVISOR');
+INSERT INTO `usuarios` VALUES (1,'Admin System','admin@transportadora.com','123456','ADMIN'),(2,'Operation Solutions','operation@transportadora.com','205689','OPERADOR'),(3,'Driver Road','driver@transportadora.com','325690','MOTORISTA');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
