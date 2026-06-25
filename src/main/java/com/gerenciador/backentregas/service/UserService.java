@@ -32,8 +32,6 @@ public class UserService {
             message = "E-mail não preenchido";
         } else if (user.getSenha().isEmpty()) {
             message = "Senha não preenchida";
-        } else if (user.getRole().isEmpty()) {
-            user.setRole("FORNECEDOR");
         }
 
         if (!message.isEmpty()) {

@@ -24,15 +24,15 @@ public class EntregaService {
      @Autowired
     private TokenService tokenService;
 
-    public void novoEdital(EntregaDTO entrega, UserDTO usuarioLogado) {
+    public void novoEntrega(EntregaDTO entrega, UserDTO usuarioLogado) {
         String message = "";
         if (!usuarioLogado.getRole().equals("OPERADOR")) {
             throw new ResponseStatusException(HttpStatusCode.valueOf(403),
                     "Acesso negado: apenas usuários com role OPERADOR podem adcionar novas entregas"
             );
         }
-        if (entrega.getNome().isEmpty()) {
-            message += "Nome não preenchido!";
+        if (entrega.getProduto().isEmpty()) {
+            message += "Produto não preenchido!";
         }
         if (entrega.getDescricao().isEmpty()) {
             message += "Descrição não preenchida!";
@@ -41,7 +41,7 @@ public class EntregaService {
             throw new ResponseStatusException(HttpStatusCode.valueOf(400), message);
         }
         entrega.setStatus("NAO ENTREGUE");
-        int rows = entregaRepository.register(entrega);
+        int rows = entregaRepository.registarEntrega(entrega);
         if (rows == 0) {
             throw new ResponseStatusException(HttpStatusCode.valueOf(500),
                     "Erro ao criar edital");
@@ -55,4 +55,10 @@ public class EntregaService {
             throw new ResponseStatusException(HttpStatusCode.valueOf(401), "Token inválido!");
         }
     }
+    public EntregaDTO buscarPorId(int id) {
+    return entregaRepository.buscarPorId(id);
+}
+    public void atualizar(EntregaDTO entrega){
+        entregaRepository.update(entrega);
+    }    
 }

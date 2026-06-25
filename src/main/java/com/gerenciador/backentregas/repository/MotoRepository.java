@@ -42,7 +42,8 @@ public List<MotoDTO> listaMoto() {
     }
         return lista;
 }
-    public void register(MotoDTO moto) {
+    public int register(MotoDTO moto) {
+         int linhas =0;
         try {
             Connection conn = Conexao.conectar();
             PreparedStatement stmt = conn.prepareStatement("insert into motoristas (usuario_id, nome, status) values (?, ?, ?)");
@@ -57,5 +58,6 @@ public List<MotoDTO> listaMoto() {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return linhas;
     }    
 }

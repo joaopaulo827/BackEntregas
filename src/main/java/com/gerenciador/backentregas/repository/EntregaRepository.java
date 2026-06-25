@@ -26,13 +26,12 @@ public List<EntregaDTO> listaEntregas() {
         Connection conn = Conexao.conectar();
         PreparedStatement stmt =null;
         ResultSet rs = null;
-        stmt= conn.prepareStatement("select * from entregas");
+        stmt= conn.prepareStatement("select * from entrega");
         rs= stmt.executeQuery();
         while (rs.next()) {
             EntregaDTO entregas = new EntregaDTO();
             entregas.setId(rs.getLong("id"));
-            entregas.setCliente_id(rs.getLong("cliente_id"));
-            entregas.setNome(rs.getString("nome"));
+            entregas.setProduto(rs.getString("produto"));
             entregas.setDescricao(rs.getString("descricao"));
             entregas.setStatus(rs.getString("status"));
             lista.add(entregas);
@@ -43,14 +42,14 @@ public List<EntregaDTO> listaEntregas() {
     }
         return lista;
 }
-    public int register(EntregaDTO entrega) {
+    public int registarEntrega(EntregaDTO entrega) {
+         int linhas =0;
         try {
             Connection conn = Conexao.conectar();
-            PreparedStatement stmt = conn.prepareStatement("insert into entregas (cliente_id, nome,descricao, status) values (?, ?, ?, ?)");
-            stmt.setLong(1, entrega.getCliente_id());
-            stmt.setString(2, entrega.getNome());
-            stmt.setString(3, entrega.getDescricao());
-            stmt.setString(4, entrega.getStatus());
+            PreparedStatement stmt = conn.prepareStatement("insert into entrega ( produto,descricao, status) values ( ?, ?, ?)");
+            stmt.setString(1, entrega.getProduto());
+            stmt.setString(2, entrega.getDescricao());
+            stmt.setString(3, entrega.getStatus());
 
             int AffectedRows = stmt.executeUpdate();
             if (AffectedRows == 0) {
@@ -59,6 +58,58 @@ public List<EntregaDTO> listaEntregas() {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-         return 0;
-    } 
+         return linhas;
+    }
+    public EntregaDTO buscarPorId(int id) {
+
+    EntregaDTO entrega = null;
+
+    try {
+        Connection conn = Conexao.conectar();
+
+        PreparedStatement stmt =
+            conn.prepareStatement("select * from entrega where id = ?");
+
+        stmt.setLong(1, id);
+
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            entrega = new EntregaDTO();
+
+            entrega.setId(rs.getLong("id"));
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return entrega;
+}
+    public int deleteById(long id){
+        int linhas =0;
+     try {
+            Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement("delete from entrega Where id=?");
+            stmt.setLong(1, id);
+            linhas=stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }   
+     return linhas;
+    }
+    public int update(EntregaDTO entrega){
+        int linhas =0;
+     try {
+            Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement("update entrega set produto=?,descricao=?,status=? where id=?");
+            stmt.setString(1, entrega.getProduto());
+            stmt.setString(2, entrega.getDescricao());
+            stmt.setString(3, entrega.getStatus());
+            linhas=stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } 
+     return linhas;
+    }
 }

@@ -10,18 +10,16 @@ package com.gerenciador.backentregas.model;
  */
 public class EntregaDTO {
     private Long id;
-    private Long cliente_id;
-    private String nome;
+    private String produto;
      private String descricao;
     private String status;
 
     public EntregaDTO() {
     }
 
-    public EntregaDTO(Long id, Long cliente_id, String nome, String descricao, String status) {
+    public EntregaDTO(Long id, String produto, String descricao, String status) {
         this.id = id;
-        this.cliente_id = cliente_id;
-        this.nome = nome;
+        this.produto = produto;
         this.descricao = descricao;
         this.status = status;
     }
@@ -34,20 +32,12 @@ public class EntregaDTO {
         this.id = id;
     }
 
-    public Long getCliente_id() {
-        return cliente_id;
+    public String getProduto() {
+        return produto;
     }
 
-    public void setCliente_id(Long cliente_id) {
-        this.cliente_id = cliente_id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setProduto(String produto) {
+        this.produto = produto;
     }
 
     public String getDescricao() {
