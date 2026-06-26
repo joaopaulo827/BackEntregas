@@ -26,6 +26,11 @@ public class UserService {
 
     public void register(UserDTO user) {
         String message = "";
+        if (!user.getRole().equals("ADMIN")) {
+            throw new ResponseStatusException(HttpStatusCode.valueOf(403),
+                    "Acesso negado: apenas admin pode adcionar novos usuarios"
+            );
+        }
         if (user.getNome().isEmpty()) {
             message = "Nome não preenchido";
         } else if (user.getEmail().isEmpty()) {
@@ -56,4 +61,5 @@ public class UserService {
         UserDTO loggedData = repository.login(user.getEmail(), user.getSenha());
         return tokenService.gerarToken(loggedData);
     }
+    
 }

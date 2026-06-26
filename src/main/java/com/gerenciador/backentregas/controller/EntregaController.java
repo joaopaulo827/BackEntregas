@@ -13,7 +13,9 @@ import com.gerenciador.backentregas.service.TokenService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,5 +45,25 @@ public class EntregaController {
         UserDTO usuarioLogado = tokenService.extrairClaim(token);
         entregaService.novoEntrega(entregas, usuarioLogado);
         return "Nova entrega adcionado com sucesso";
-    }    
+    }
+    @GetMapping("/entrega/{id}")
+    public EntregaDTO buscarEntrega(@PathVariable Long id,@RequestHeader("Authorization") String authHeader) {
+
+    String token = authHeader.replace("Bearer ", "");
+    tokenService.extrairClaim(token);
+
+    return entregaService.buscarPorId(0);
+}
+
+    @PutMapping("/entrega/{id}")
+    public String editarEntrega(@PathVariable Long id,@RequestBody EntregaDTO entrega,@RequestHeader("Authorization") String authHeader) {
+
+    String token = authHeader.replace("Bearer ", "");
+    tokenService.extrairClaim(token);
+
+    entrega.setId(id);
+    entregaService.atualizar(entrega);
+
+    return "Entrega atualizada com sucesso.";
+}    
 }

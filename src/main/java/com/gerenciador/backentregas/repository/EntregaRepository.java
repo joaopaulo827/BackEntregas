@@ -78,6 +78,9 @@ public List<EntregaDTO> listaEntregas() {
             entrega = new EntregaDTO();
 
             entrega.setId(rs.getLong("id"));
+            entrega.setProduto(rs.getString("produto"));
+            entrega.setDescricao(rs.getString("descricao"));
+            entrega.setStatus(rs.getString("status"));
         }
 
     } catch (SQLException e) {
@@ -106,6 +109,7 @@ public List<EntregaDTO> listaEntregas() {
             stmt.setString(1, entrega.getProduto());
             stmt.setString(2, entrega.getDescricao());
             stmt.setString(3, entrega.getStatus());
+            stmt.setLong(4, entrega.getId());
             linhas=stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
