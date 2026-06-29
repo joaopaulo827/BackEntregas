@@ -60,33 +60,24 @@ public List<EntregaDTO> listaEntregas() {
         }
          return linhas;
     }
-    public EntregaDTO buscarPorId(int id) {
-
-    EntregaDTO entrega = null;
-
-    try {
-        Connection conn = Conexao.conectar();
-
-        PreparedStatement stmt =
+    public EntregaDTO buscarPorId(Long id) {
+        EntregaDTO entrega = null;
+        try {
+            Connection conn = Conexao.conectar();
+            PreparedStatement stmt =
             conn.prepareStatement("select * from entrega where id = ?");
-
-        stmt.setLong(1, id);
-
-        ResultSet rs = stmt.executeQuery();
-
-        if (rs.next()) {
+            stmt.setLong(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
             entrega = new EntregaDTO();
-
             entrega.setId(rs.getLong("id"));
             entrega.setProduto(rs.getString("produto"));
             entrega.setDescricao(rs.getString("descricao"));
             entrega.setStatus(rs.getString("status"));
         }
-
     } catch (SQLException e) {
         e.printStackTrace();
     }
-
     return entrega;
 }
     public int deleteById(long id){

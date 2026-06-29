@@ -55,7 +55,7 @@ public class EntregaService {
             throw new ResponseStatusException(HttpStatusCode.valueOf(401), "Token inválido!");
         }
     }
-    public EntregaDTO buscarPorId(int id) {
+    public EntregaDTO buscarPorId(Long id) {
     return entregaRepository.buscarPorId(id);
 }
     public void atualizar(EntregaDTO entrega){
