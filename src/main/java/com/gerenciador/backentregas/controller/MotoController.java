@@ -9,6 +9,9 @@ import com.gerenciador.backentregas.service.MotoService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,4 +33,19 @@ public class MotoController {
         String token = authHeader.replace("Bearer ", "");
         return motoService.listaMoto(token);
     }
+    @GetMapping("/motorista/{id}")
+    public MotoDTO buscarEntrega(@PathVariable Long id) {
+    return motoService.buscarPorId(id);
+}
+@PutMapping("/motorista/{id}")
+public String editarEntrega(@PathVariable Long id, @RequestBody MotoDTO moto) {
+    try {
+        moto.setId(id);
+        motoService.atualizar(moto);
+        return "OK";
+    } catch (Exception e) {
+        e.printStackTrace();
+        throw e;
+    }
+}   
 }

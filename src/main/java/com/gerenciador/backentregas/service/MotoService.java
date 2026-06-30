@@ -5,7 +5,6 @@
 package com.gerenciador.backentregas.service;
 
 import com.gerenciador.backentregas.model.MotoDTO;
-import com.gerenciador.backentregas.model.UserDTO;
 import com.gerenciador.backentregas.repository.MotoRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +30,11 @@ public class MotoService {
         } else {
             throw new ResponseStatusException(HttpStatusCode.valueOf(401), "Token inválido!");
         }
-    }    
+    }
+    public MotoDTO buscarPorId(Long id) {
+    return motoRepository.buscarPorId(id);
+}
+    public void atualizar(MotoDTO moto){
+        motoRepository.update(moto);
+    }     
 }

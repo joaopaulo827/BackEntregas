@@ -42,7 +42,7 @@ public List<MotoDTO> listaMoto() {
     }
         return lista;
 }
-    public int register(MotoDTO moto) {
+    public int registerMototista(MotoDTO moto) {
          int linhas =0;
         try {
             Connection conn = Conexao.conectar();
@@ -59,5 +59,60 @@ public List<MotoDTO> listaMoto() {
             e.printStackTrace();
         }
         return linhas;
-    }    
+    }
+    public MotoDTO buscarPorId(Long id) {
+        MotoDTO moto = null;
+        try {
+            Connection conn = Conexao.conectar();
+            PreparedStatement stmt =
+            conn.prepareStatement("select * from motoristas where id = ?");
+            stmt.setLong(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+            moto = new MotoDTO();
+            moto.setId(rs.getLong("id"));
+            moto.setUsuario_id(rs.getLong("usuario_id"));
+            moto.setNome(rs.getString("nome"));
+            moto.setStatus(rs.getString("status"));
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return moto;
+}
+    public int deleteById(long id){
+        int linhas =0;
+     try {
+            Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement("delete from motoristas Where id=?");
+            stmt.setLong(1, id);
+            linhas=stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }   
+     return linhas;
+    }
+public int update(MotoDTO moto) {
+    int linhas = 0;
+    try {
+        Connection conn = Conexao.conectar();
+        PreparedStatement stmt = conn.prepareStatement(
+            "update motoristas set usuario_id=?, nome=?, status=? where id=?"
+        );
+
+        stmt.setLong(1, moto.getUsuario_id());
+        stmt.setString(2, moto.getNome());
+        stmt.setString(3, moto.getStatus());
+        stmt.setLong(4, moto.getId());
+
+        linhas = stmt.executeUpdate();
+
+        System.out.println("Linhas atualizadas: " + linhas);
+
+    } catch (Exception e) { // temporariamente capture Exception
+        e.printStackTrace();
+    }
+
+    return linhas;
+}    
 }
