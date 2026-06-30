@@ -5,6 +5,7 @@
 package com.gerenciador.backentregas.service;
 
 import com.gerenciador.backentregas.model.MotoDTO;
+import com.gerenciador.backentregas.model.UserDTO;
 import com.gerenciador.backentregas.repository.MotoRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,22 @@ public class MotoService {
 
     @Autowired
     private TokenService tokenService;
+    
+    public void novoEntrega(MotoDTO moto, UserDTO usuarioLogado) {
+        String message = "";
+        if (moto.getNome().isEmpty()) {
+            message += "Nome não preenchido!";
+        }
+        if (!message.isEmpty()) {
+            throw new ResponseStatusException(HttpStatusCode.valueOf(400), message);
+        }
+        moto.setStatus("NAO ENTREGUE");
+        int rows = motoRepository.registerMototista(moto);
+        if (rows == 0) {
+            throw new ResponseStatusException(HttpStatusCode.valueOf(500),
+                    "Erro ao criar entrega");
+        }
+    }    
 
     public List<MotoDTO> listaMoto(String authHeader) {
         if (tokenService.validarToken(authHeader)) {

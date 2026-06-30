@@ -34,9 +34,6 @@ public class EntregaService {
         if (entrega.getProduto().isEmpty()) {
             message += "Produto não preenchido!";
         }
-        if (entrega.getDescricao().isEmpty()) {
-            message += "Descrição não preenchida!";
-        }
         if (!message.isEmpty()) {
             throw new ResponseStatusException(HttpStatusCode.valueOf(400), message);
         }
@@ -44,7 +41,7 @@ public class EntregaService {
         int rows = entregaRepository.registarEntrega(entrega);
         if (rows == 0) {
             throw new ResponseStatusException(HttpStatusCode.valueOf(500),
-                    "Erro ao criar edital");
+                    "Erro ao criar entrega");
         }
     }
 
