@@ -30,14 +30,16 @@ public class MotoService {
         if (moto.getNome().isEmpty()) {
             message += "Nome não preenchido!";
         }
+        if (moto.getStatus().isEmpty()){
+             message += "Status não preenchido!";
+        }
         if (!message.isEmpty()) {
             throw new ResponseStatusException(HttpStatusCode.valueOf(400), message);
         }
-        moto.setStatus("NAO ENTREGUE");
         int rows = motoRepository.registerMototista(moto);
         if (rows == 0) {
             throw new ResponseStatusException(HttpStatusCode.valueOf(500),
-                    "Erro ao criar entrega");
+                    "Erro ao adcionar novo motorista");
         }
     }    
 

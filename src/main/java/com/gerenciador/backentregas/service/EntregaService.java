@@ -26,11 +26,6 @@ public class EntregaService {
 
     public void novoEntrega(EntregaDTO entrega, UserDTO usuarioLogado) {
         String message = "";
-        if (!usuarioLogado.getRole().equals("OPERADOR")) {
-            throw new ResponseStatusException(HttpStatusCode.valueOf(403),
-                    "Acesso negado: apenas usuários com role OPERADOR podem adcionar novas entregas"
-            );
-        }
         if (entrega.getProduto().isEmpty()) {
             message += "Produto não preenchido!";
         }

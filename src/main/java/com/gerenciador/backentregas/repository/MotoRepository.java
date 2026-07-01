@@ -50,11 +50,8 @@ public List<MotoDTO> listaMoto() {
             stmt.setLong(1, moto.getUsuario_id());
             stmt.setString(2, moto.getNome());
             stmt.setString(3, moto.getStatus());
-
-            int AffectedRows = stmt.executeUpdate();
-            if (AffectedRows == 0) {
-                throw new SQLException("Falha na atualização - Nenhuma linha foi encontrada.");
-            }
+            
+            linhas = stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -96,23 +93,15 @@ public int update(MotoDTO moto) {
     int linhas = 0;
     try {
         Connection conn = Conexao.conectar();
-        PreparedStatement stmt = conn.prepareStatement(
-            "update motoristas set usuario_id=?, nome=?, status=? where id=?"
-        );
-
-        stmt.setLong(1, moto.getUsuario_id());
-        stmt.setString(2, moto.getNome());
-        stmt.setString(3, moto.getStatus());
-        stmt.setLong(4, moto.getId());
-
-        linhas = stmt.executeUpdate();
-
-        System.out.println("Linhas atualizadas: " + linhas);
-
-    } catch (Exception e) { // temporariamente capture Exception
-        e.printStackTrace();
-    }
-
+        PreparedStatement stmt = conn.prepareStatement("update motoristas set usuario_id=?, nome=?, status=? where id=?");
+            stmt.setLong(1, moto.getUsuario_id());
+            stmt.setString(2, moto.getNome());
+            stmt.setString(3, moto.getStatus());
+            stmt.setLong(4, moto.getId());
+            linhas = stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     return linhas;
-}    
+    }    
 }

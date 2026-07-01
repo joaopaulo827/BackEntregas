@@ -39,21 +39,21 @@ public class MotoController {
         String token = authHeader.replace("Bearer ", "");
         return motoService.listaMoto(token);
     }
-    @PostMapping("/criar")
-    public String adcionarMoto(@RequestBody MotoDTO moto, @RequestHeader("Authorization") String authHeader) {
+    @PostMapping("/motorista/adicionar")
+    public String adicionarMoto(@RequestBody MotoDTO moto, @RequestHeader("Authorization") String authHeader) {
         String token = authHeader.replace("Bearer ", "");
         UserDTO usuarioLogado = tokenService.extrairClaim(token);
         motoService.novoEntrega(moto, usuarioLogado);
-        return "Nova entrega adcionado com sucesso";
+        return "Novo motorista cadastrato com sucesso";
     }    
     @GetMapping("/motorista/{id}")
     public MotoDTO buscarMoto(@PathVariable Long id) {
     return motoService.buscarPorId(id);
 }
-@PutMapping("/motorista/{id}")
-public String editarMoto(@PathVariable Long id, @RequestBody MotoDTO moto) {
-    moto.setId(id);
-    motoService.atualizar(moto);
-    return "Motorista atualizada com sucesso.";
+    @PutMapping("/motorista/{id}")
+    public String editarMoto(@PathVariable Long id, @RequestBody MotoDTO moto) {
+        moto.setId(id);
+        motoService.atualizar(moto);
+        return "Motorista atualizada com sucesso.";
 }   
 }

@@ -37,7 +37,7 @@ public class EntregaController {
         String token = authHeader.replace("Bearer ", "");
         return entregaService.listaEntrega(token);
     }
-    @PostMapping("/criar")
+    @PostMapping("/entrega/criar")
     public String criarEntrega(@RequestBody EntregaDTO entregas, @RequestHeader("Authorization") String authHeader) {
         String token = authHeader.replace("Bearer ", "");
         UserDTO usuarioLogado = tokenService.extrairClaim(token);

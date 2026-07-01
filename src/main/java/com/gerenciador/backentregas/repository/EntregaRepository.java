@@ -51,10 +51,7 @@ public List<EntregaDTO> listaEntregas() {
             stmt.setString(2, entrega.getDescricao());
             stmt.setString(3, entrega.getStatus());
 
-            int AffectedRows = stmt.executeUpdate();
-            if (AffectedRows == 0) {
-                throw new SQLException("Falha na atualização - Nenhuma linha foi encontrada.");
-            }
+              linhas = stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
