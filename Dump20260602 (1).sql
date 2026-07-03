@@ -52,12 +52,9 @@ DROP TABLE IF EXISTS `motoristas`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `motoristas` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `usuario_id` bigint(20) DEFAULT NULL,
   `nome` varchar(150) NOT NULL,
   `status` enum('ATIVO','INATIVO') DEFAULT 'ATIVO',
-  PRIMARY KEY (`id`),
-  KEY `usuario_id` (`usuario_id`),
-  CONSTRAINT `motoristas_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -67,7 +64,7 @@ CREATE TABLE `motoristas` (
 
 LOCK TABLES `motoristas` WRITE;
 /*!40000 ALTER TABLE `motoristas` DISABLE KEYS */;
-INSERT INTO `motoristas` VALUES (1,3,'Driver Road','ATIVO');
+INSERT INTO `motoristas` VALUES (1,'Driver Road','ATIVO');
 /*!40000 ALTER TABLE `motoristas` ENABLE KEYS */;
 UNLOCK TABLES;
 
