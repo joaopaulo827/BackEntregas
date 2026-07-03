@@ -43,11 +43,11 @@ public class MotoController {
     public String adicionarMoto(@RequestBody MotoDTO moto, @RequestHeader("Authorization") String authHeader) {
         String token = authHeader.replace("Bearer ", "");
         UserDTO usuarioLogado = tokenService.extrairClaim(token);
-        motoService.novoEntrega(moto, usuarioLogado);
+        motoService.novoMotorista(moto, usuarioLogado);
         return "Novo motorista cadastrato com sucesso";
     }    
     @GetMapping("/motorista/{id}")
-    public MotoDTO buscarMoto(@PathVariable Long id) {
+    public MotoDTO buscarMoto(@PathVariable Long id ) {
     return motoService.buscarPorId(id);
 }
     @PutMapping("/motorista/{id}")

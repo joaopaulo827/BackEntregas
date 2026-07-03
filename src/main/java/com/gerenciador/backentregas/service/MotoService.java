@@ -25,7 +25,7 @@ public class MotoService {
     @Autowired
     private TokenService tokenService;
     
-    public void novoEntrega(MotoDTO moto, UserDTO usuarioLogado) {
+    public void novoMotorista(MotoDTO moto, UserDTO usuarioLogado) {
         String message = "";
         if (moto.getNome().isEmpty()) {
             message += "Nome não preenchido!";
@@ -36,13 +36,12 @@ public class MotoService {
         if (!message.isEmpty()) {
             throw new ResponseStatusException(HttpStatusCode.valueOf(400), message);
         }
-        int rows = motoRepository.registerMototista(moto);
+        int rows = motoRepository.registerMotorista(moto);
         if (rows == 0) {
             throw new ResponseStatusException(HttpStatusCode.valueOf(500),
                     "Erro ao adcionar novo motorista");
         }
     }    
-
     public List<MotoDTO> listaMoto(String authHeader) {
         if (tokenService.validarToken(authHeader)) {
             return motoRepository.listaMoto();
@@ -52,8 +51,12 @@ public class MotoService {
     }
     public MotoDTO buscarPorId(Long id) {
     return motoRepository.buscarPorId(id);
-}
+    }
     public void atualizar(MotoDTO moto){
-        motoRepository.update(moto);
-    }     
+     int rows = motoRepository.update(moto);
+
+    if (rows == 0) {
+        throw new ResponseStatusException(HttpStatusCode.valueOf(404), "Motorista não encontrado.");
+        }     
+    }
 }

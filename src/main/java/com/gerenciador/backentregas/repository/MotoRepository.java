@@ -31,7 +31,6 @@ public List<MotoDTO> listaMoto() {
         while (rs.next()) {
             MotoDTO motoristas = new MotoDTO();
             motoristas.setId(rs.getLong("id"));
-            motoristas.setUsuario_id(rs.getLong("usuario_id"));
             motoristas.setNome(rs.getString("nome"));
             motoristas.setStatus(rs.getString("status"));
             lista.add(motoristas);
@@ -42,14 +41,13 @@ public List<MotoDTO> listaMoto() {
     }
         return lista;
 }
-    public int registerMototista(MotoDTO moto) {
+    public int registerMotorista(MotoDTO moto) {
          int linhas =0;
         try {
             Connection conn = Conexao.conectar();
-            PreparedStatement stmt = conn.prepareStatement("insert into motoristas (usuario_id, nome, status) values (?, ?, ?)");
-            stmt.setLong(1, moto.getUsuario_id());
-            stmt.setString(2, moto.getNome());
-            stmt.setString(3, moto.getStatus());
+            PreparedStatement stmt = conn.prepareStatement("insert into motoristas ( nome, status) values ( ?, ?)");
+            stmt.setString(1, moto.getNome());
+            stmt.setString(2, moto.getStatus());
             
             linhas = stmt.executeUpdate();
         } catch (SQLException e) {
@@ -68,7 +66,6 @@ public List<MotoDTO> listaMoto() {
             if (rs.next()) {
             moto = new MotoDTO();
             moto.setId(rs.getLong("id"));
-            moto.setUsuario_id(rs.getLong("usuario_id"));
             moto.setNome(rs.getString("nome"));
             moto.setStatus(rs.getString("status"));
         }
@@ -87,17 +84,16 @@ public List<MotoDTO> listaMoto() {
         } catch (SQLException e) {
             e.printStackTrace();
         }   
-     return linhas;
+    return linhas;
     }
-public int update(MotoDTO moto) {
-    int linhas = 0;
+    public int update(MotoDTO moto) {
+        int linhas = 0;
     try {
         Connection conn = Conexao.conectar();
-        PreparedStatement stmt = conn.prepareStatement("update motoristas set usuario_id=?, nome=?, status=? where id=?");
-            stmt.setLong(1, moto.getUsuario_id());
-            stmt.setString(2, moto.getNome());
-            stmt.setString(3, moto.getStatus());
-            stmt.setLong(4, moto.getId());
+        PreparedStatement stmt = conn.prepareStatement("update motoristas set nome=?, status=? where id=?");
+            stmt.setString(1, moto.getNome());
+            stmt.setString(2, moto.getStatus());
+            stmt.setLong(3, moto.getId());
             linhas = stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

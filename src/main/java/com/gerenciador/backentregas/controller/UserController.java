@@ -34,4 +34,8 @@ public class UserController {
         String token = userService.logar(user);
         return token;
     }
+    @PostMapping("/atualizar/{id}")
+    public void atualizar(@RequestBody UserDTO user) {
+        userService.atualizar(user);
+    }
 }

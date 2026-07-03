@@ -56,5 +56,10 @@ public class UserService {
         UserDTO loggedData = repository.login(user.getEmail(), user.getSenha());
         return tokenService.gerarToken(loggedData);
     }
-    
+    public void atualizar(UserDTO user){
+        if (user == null || user.getEmail() == null) {
+            throw new ResponseStatusException(HttpStatusCode.valueOf(400), "Email não encontrado.");
+        }
+        repository.update(user);    
+    }
 }

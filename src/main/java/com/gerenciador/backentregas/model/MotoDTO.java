@@ -10,16 +10,14 @@ package com.gerenciador.backentregas.model;
  */
 public class MotoDTO {
     private Long id;
-    private Long usuario_id;
     private String nome;
     private String status;
 
     public MotoDTO() {
     }
 
-    public MotoDTO(Long id, Long usuario_id, String nome, String status) {
+    public MotoDTO(Long id, String nome, String status) {
         this.id = id;
-        this.usuario_id = usuario_id;
         this.nome = nome;
         this.status = status;
     }
@@ -30,14 +28,6 @@ public class MotoDTO {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getUsuario_id() {
-        return usuario_id;
-    }
-
-    public void setUsuario_id(Long usuario_id) {
-        this.usuario_id = usuario_id;
     }
 
     public String getNome() {

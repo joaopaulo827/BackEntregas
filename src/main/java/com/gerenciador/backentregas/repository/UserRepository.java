@@ -81,4 +81,29 @@ public List<UserDTO> listaUsuarios() {
 
         return user;
     }
+    public int deleteById(long id){
+        int linhas =0;
+     try {
+            Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement("delete from usuarios Where id=?");
+            stmt.setLong(1, id);
+            linhas=stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }   
+     return linhas;
+    }    
+    public int update(UserDTO user) {
+    int linhas = 0;
+    try {
+        Connection conn = Conexao.conectar();
+        PreparedStatement stmt = conn.prepareStatement("update usuarios set senha=? where email=?");
+            stmt.setString(1, user.getSenha());
+            stmt.setString(2, user.getEmail());            
+            linhas = stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    return linhas;
+    }
 }
