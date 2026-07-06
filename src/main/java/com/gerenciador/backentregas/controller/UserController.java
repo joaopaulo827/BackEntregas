@@ -9,6 +9,7 @@ import com.gerenciador.backentregas.model.UserRequestDTO;
 import com.gerenciador.backentregas.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,7 +35,7 @@ public class UserController {
         String token = userService.logar(user);
         return token;
     }
-    @PostMapping("/atualizar/{id}")
+    @PutMapping("/atualizar")
     public void atualizar(@RequestBody UserDTO user) {
         userService.atualizar(user);
     }

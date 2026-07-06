@@ -60,6 +60,10 @@ public class UserService {
         if (user == null || user.getEmail() == null) {
             throw new ResponseStatusException(HttpStatusCode.valueOf(400), "Email não encontrado.");
         }
-        repository.update(user);    
+        int linhas = repository.update(user);
+
+    if (linhas == 0) {
+        throw new ResponseStatusException(HttpStatusCode.valueOf(404), "Usuário não encontrado.");
+    }   
     }
 }
