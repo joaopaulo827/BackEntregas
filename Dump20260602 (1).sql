@@ -18,6 +18,32 @@ USE `db_gerenciador`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `endereco`
+--
+
+DROP TABLE IF EXISTS `endereco`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `endereco` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `rua` varchar(150) NOT NULL,
+  `numero` int(11) NOT NULL,
+  `cidade` varchar(150) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `endereco`
+--
+
+LOCK TABLES `endereco` WRITE;
+/*!40000 ALTER TABLE `endereco` DISABLE KEYS */;
+INSERT INTO `endereco` VALUES (1,'Rua das Flores',123,'Londrina'),(2,'Avenida Brasil',456,'Curitiba'),(3,'Rua XV de Novembro',789,'Maringá');
+/*!40000 ALTER TABLE `endereco` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `entrega`
 --
 
@@ -29,7 +55,10 @@ CREATE TABLE `entrega` (
   `produto` varchar(150) NOT NULL,
   `descricao` varchar(150) DEFAULT NULL,
   `status` enum('ENTREGUE','EM ANDAMENTO','NAO ENTREGUE','DEVOLVIDO') DEFAULT 'NAO ENTREGUE',
-  PRIMARY KEY (`id`)
+  `endereco_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_entrega_endereco` (`endereco_id`),
+  CONSTRAINT `fk_entrega_endereco` FOREIGN KEY (`endereco_id`) REFERENCES `endereco` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -39,7 +68,7 @@ CREATE TABLE `entrega` (
 
 LOCK TABLES `entrega` WRITE;
 /*!40000 ALTER TABLE `entrega` DISABLE KEYS */;
-INSERT INTO `entrega` VALUES (1,'Computador','','NAO ENTREGUE'),(2,'Carro','Ferrari','NAO ENTREGUE');
+INSERT INTO `entrega` VALUES (1,'Computador','','NAO ENTREGUE',1),(2,'Carro','Ferrari','NAO ENTREGUE',2);
 /*!40000 ALTER TABLE `entrega` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,7 +112,7 @@ CREATE TABLE `usuarios` (
   `role` enum('ADMIN','OPERADOR','MOTORISTA') NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,6 +124,14 @@ LOCK TABLES `usuarios` WRITE;
 INSERT INTO `usuarios` VALUES (1,'Admin System','admin@transportadora.com','123456','ADMIN'),(2,'Operation Solutions','operation@transportadora.com','205689','OPERADOR'),(3,'Driver Road','driver@transportadora.com','325690','MOTORISTA');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping events for database 'db_gerenciador'
+--
+
+--
+-- Dumping routines for database 'db_gerenciador'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -105,4 +142,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-25 15:08:18
+-- Dump completed on 2026-07-28 14:26:19
