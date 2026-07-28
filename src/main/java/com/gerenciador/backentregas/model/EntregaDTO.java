@@ -11,17 +11,18 @@ package com.gerenciador.backentregas.model;
 public class EntregaDTO {
     private Long id;
     private String produto;
-     private String descricao;
+    private String descricao;
     private String status;
-
+    private Long enderecoId;
     public EntregaDTO() {
     }
 
-    public EntregaDTO(Long id, String produto, String descricao, String status) {
+    public EntregaDTO(Long id, String produto, String descricao, String status, Long enderecoId) {
         this.id = id;
         this.produto = produto;
         this.descricao = descricao;
         this.status = status;
+        this.enderecoId= enderecoId;
     }
 
     public Long getId() {
@@ -55,5 +56,11 @@ public class EntregaDTO {
     public void setStatus(String status) {
         this.status = status;
     }
+    public Long getEnderecoId() {
+        return enderecoId;
+    }
 
+    public void setEnderecoId(Long enderecoId) {
+        this.enderecoId = enderecoId;
+    }
 }
