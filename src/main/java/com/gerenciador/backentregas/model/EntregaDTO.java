@@ -14,15 +14,17 @@ public class EntregaDTO {
     private String descricao;
     private String status;
     private Long enderecoId;
+    private Long motoristaId;
     public EntregaDTO() {
     }
 
-    public EntregaDTO(Long id, String produto, String descricao, String status, Long enderecoId) {
+    public EntregaDTO(Long id, String produto, String descricao, String status, Long enderecoId, Long motoristaId) {
         this.id = id;
         this.produto = produto;
         this.descricao = descricao;
         this.status = status;
         this.enderecoId= enderecoId;
+        this.motoristaId= motoristaId;
     }
 
     public Long getId() {
@@ -63,4 +65,13 @@ public class EntregaDTO {
     public void setEnderecoId(Long enderecoId) {
         this.enderecoId = enderecoId;
     }
+
+    public Long getMotoristaId() {
+        return motoristaId;
+    }
+
+    public void setMotoristaId(Long motoristaId) {
+        this.motoristaId = motoristaId;
+    }
+    
 }

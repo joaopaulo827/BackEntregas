@@ -35,6 +35,7 @@ public List<EntregaDTO> listaEntregas() {
             entregas.setDescricao(rs.getString("descricao"));
             entregas.setStatus(rs.getString("status"));
             entregas.setEnderecoId(rs.getLong("endereco_id"));
+            entregas.setMotoristaId(rs.getLong("motorista_id"));
             lista.add(entregas);
         }
 
@@ -47,11 +48,12 @@ public List<EntregaDTO> listaEntregas() {
          int linhas =0;
         try {
             Connection conn = Conexao.conectar();
-            PreparedStatement stmt = conn.prepareStatement("insert into entrega ( produto,descricao, status, endereco_id) values ( ?, ?, ?, ?)");
+            PreparedStatement stmt = conn.prepareStatement("insert into entrega ( produto,descricao, status, endereco_id, motorista_id) values ( ?, ?, ?, ?, ?)");
             stmt.setString(1, entrega.getProduto());
             stmt.setString(2, entrega.getDescricao());
             stmt.setString(3, entrega.getStatus());
             stmt.setLong(4, entrega.getEnderecoId());
+            stmt.setLong(5, entrega.getMotoristaId());
 
               linhas = stmt.executeUpdate();
         } catch (SQLException e) {
@@ -74,6 +76,7 @@ public List<EntregaDTO> listaEntregas() {
             entrega.setDescricao(rs.getString("descricao"));
             entrega.setStatus(rs.getString("status"));
             entrega.setEnderecoId(rs.getLong("endereco_id"));
+            entrega.setMotoristaId(rs.getLong("motorista_id"));
         }
     } catch (SQLException e) {
         e.printStackTrace();
@@ -96,12 +99,13 @@ public List<EntregaDTO> listaEntregas() {
         int linhas =0;
      try {
             Connection conn = Conexao.conectar();
-            PreparedStatement stmt = conn.prepareStatement("update entrega set produto=?,descricao=?,status=?,endereco_id=? where id=?");
+            PreparedStatement stmt = conn.prepareStatement("update entrega set produto=?, descricao=?, status=?, endereco_id=?,motorista_id=? where id=?");
             stmt.setString(1, entrega.getProduto());
             stmt.setString(2, entrega.getDescricao());
             stmt.setString(3, entrega.getStatus());
             stmt.setLong(4, entrega.getEnderecoId());
-            stmt.setLong(5, entrega.getId());
+            stmt.setLong(5, entrega.getMotoristaId());
+            stmt.setLong(6, entrega.getId());
             linhas=stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
