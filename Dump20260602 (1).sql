@@ -56,9 +56,12 @@ CREATE TABLE `entrega` (
   `descricao` varchar(150) DEFAULT NULL,
   `status` enum('ENTREGUE','EM ANDAMENTO','NAO ENTREGUE','DEVOLVIDO') DEFAULT 'NAO ENTREGUE',
   `endereco_id` bigint(20) NOT NULL,
+  `motorista_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_entrega_endereco` (`endereco_id`),
-  CONSTRAINT `fk_entrega_endereco` FOREIGN KEY (`endereco_id`) REFERENCES `endereco` (`id`)
+  KEY `fk_entrega_motoristas` (`motorista_id`),
+  CONSTRAINT `fk_entrega_endereco` FOREIGN KEY (`endereco_id`) REFERENCES `endereco` (`id`),
+  CONSTRAINT `fk_entrega_motoristas` FOREIGN KEY (`motorista_id`) REFERENCES `motoristas` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -68,7 +71,7 @@ CREATE TABLE `entrega` (
 
 LOCK TABLES `entrega` WRITE;
 /*!40000 ALTER TABLE `entrega` DISABLE KEYS */;
-INSERT INTO `entrega` VALUES (1,'Computador','','NAO ENTREGUE',1),(2,'Carro','Ferrari','NAO ENTREGUE',2);
+INSERT INTO `entrega` VALUES (1,'Computador','','NAO ENTREGUE',1,1),(2,'Carro','Ferrari','NAO ENTREGUE',2,1);
 /*!40000 ALTER TABLE `entrega` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -142,4 +145,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-07-28 14:26:19
+-- Dump completed on 2026-07-28 15:38:01
