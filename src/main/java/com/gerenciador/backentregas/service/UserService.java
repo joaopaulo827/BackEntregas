@@ -24,7 +24,16 @@ public class UserService {
     @Autowired
     private TokenService tokenService;
 
-    public void register(UserDTO user) {
+    public void register(UserDTO user, String token) {
+    UserDTO usuarioLogado = tokenService.extrairClaim(token);
+
+    if (!"ADMIN".equals(usuarioLogado.getRole())
+            && !"OPERADOR".equals(usuarioLogado.getRole())) {
+        throw new ResponseStatusException(
+                HttpStatusCode.valueOf(403),
+                "Você não possui permissão para cadastrar usuários."
+        );
+    }
         String message = "";
         if (user.getNome().isEmpty()) {
             message = "Nome não preenchido";

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,20 +22,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/auth")
 public class UserController {
+
     @Autowired
     private UserService userService;
 
     @PostMapping("/registrar")
-    public String registrar(@RequestBody UserDTO user) {
-        userService.register(user);
+    public String registrar(
+            @RequestBody UserDTO user,
+            @RequestHeader("Authorization") String token) {
+
+        userService.register(user, token);
         return "Cadastro realizado com sucesso!";
     }
 
     @PostMapping("/logar")
     public String logar(@RequestBody UserRequestDTO user) {
-        String token = userService.logar(user);
-        return token;
+        return userService.logar(user);
     }
+
     @PutMapping("/atualizar")
     public void atualizar(@RequestBody UserDTO user) {
         userService.atualizar(user);
