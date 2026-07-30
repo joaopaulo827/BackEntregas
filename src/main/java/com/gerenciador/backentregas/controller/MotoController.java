@@ -39,7 +39,7 @@ public class MotoController {
         String token = authHeader.replace("Bearer ", "");
         return motoService.listaMoto(token);
     }
-    @PostMapping("/motorista/adicionar")
+    @PostMapping("/motorista/adicionarM")
     public String adicionarMoto(@RequestBody MotoDTO moto, @RequestHeader("Authorization") String authHeader) {
         String token = authHeader.replace("Bearer ", "");
         UserDTO usuarioLogado = tokenService.extrairClaim(token);

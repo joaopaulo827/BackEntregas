@@ -7,23 +7,26 @@ package com.gerenciador.backentregas.service;
 
 
 import com.gerenciador.backentregas.model.EnderecoDTO;
+import com.gerenciador.backentregas.model.UserDTO;
 import com.gerenciador.backentregas.repository.EnderecoRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 /**
  *
  * @author Aluno
  */
+@Service
 public class EnderecoService {
     @Autowired
-    private EnderecoRepository entregaRepository;
+    private EnderecoRepository enderecoRepository;
      @Autowired
     private TokenService tokenService;
      
-    public void novoEndereco(EnderecoDTO endereco) {
+    public void novoEndereco(EnderecoDTO endereco, UserDTO usuarioLogado) {
         String message = "";
         if (endereco.getCidade().isEmpty()) {
             message += "Cidade não preenchido!";
@@ -37,7 +40,7 @@ public class EnderecoService {
         if (!message.isEmpty()) {
             throw new ResponseStatusException(HttpStatusCode.valueOf(400), message);
         }
-        int rows = entregaRepository.registarEntrega(endereco);
+        int rows = enderecoRepository.registarEndereco(endereco);
         if (rows == 0) {
             throw new ResponseStatusException(HttpStatusCode.valueOf(500),
                     "Erro ao criar entrega");
@@ -45,15 +48,15 @@ public class EnderecoService {
     }
     public List<EnderecoDTO> listaEndereco(String authHeader) {
         if (tokenService.validarToken(authHeader)) {
-            return entregaRepository.listaEndereco();
+            return enderecoRepository.listaEndereco();
         } else {
             throw new ResponseStatusException(HttpStatusCode.valueOf(401), "Token inválido!");
         }
     }
     public EnderecoDTO buscarPorId(Long id) {
-    return entregaRepository.buscarPorId(id);
+    return enderecoRepository.buscarPorId(id);
 }
     public void atualizar(EnderecoDTO endereco){
-        entregaRepository.update(endereco);
+        enderecoRepository.update(endereco);
     }    
 }

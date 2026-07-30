@@ -42,17 +42,26 @@ public class EntregaController {
         String token = authHeader.replace("Bearer ", "");
         UserDTO usuarioLogado = tokenService.extrairClaim(token);
         entregaService.novoEntrega(entregas, usuarioLogado);
-        return "Nova entrega adcionado com sucesso";
+        return "Nova entrega adicionado com sucesso";
     }
     @GetMapping("/entrega/{id}")
     public EntregaDTO buscarEntrega(@PathVariable Long id) {
-    return entregaService.buscarPorId(id);
-}
+        return entregaService.buscarPorId(id);
+    }
 
     @PutMapping("/entrega/{id}")
-    public String editarEntrega(@PathVariable Long id,@RequestBody EntregaDTO entrega) {
-    entrega.setId(id);
-    entregaService.atualizar(entrega);
-    return "Entrega atualizada com sucesso.";
-}    
+    public String editarEntrega(@PathVariable Long id,
+                                @RequestBody EntregaDTO entrega) {
+        entrega.setId(id);
+        entregaService.atualizar(entrega);
+        return "Entrega atualizada com sucesso.";
+    }
+
+    @PutMapping("/entrega/{id}/motorista")
+    public String editarMotorista(@PathVariable Long id,
+                                  @RequestBody EntregaDTO entrega) {
+        entrega.setId(id);
+        entregaService.atualizarMotorista(entrega);
+        return "Motorista atualizado com sucesso.";
+    }    
 }

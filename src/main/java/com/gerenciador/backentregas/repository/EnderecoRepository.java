@@ -42,7 +42,7 @@ public List<EnderecoDTO> listaEndereco() {
     }
         return lista;
 }
-    public int registarEntrega(EnderecoDTO enderecos) {
+    public int registarEndereco(EnderecoDTO enderecos) {
          int linhas =0;
         try {
             Connection conn = Conexao.conectar();
@@ -97,7 +97,7 @@ public List<EnderecoDTO> listaEndereco() {
             stmt.setString(1, enderecos.getRua());
             stmt.setLong(2, enderecos.getNumero());
             stmt.setString(3, enderecos.getCidade());
-            stmt.setLong(6, enderecos.getId());
+            stmt.setLong(4, enderecos.getId());
             linhas=stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

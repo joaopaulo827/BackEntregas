@@ -33,6 +33,7 @@ public class EntregaService {
             throw new ResponseStatusException(HttpStatusCode.valueOf(400), message);
         }
         entrega.setStatus("NAO ENTREGUE");
+        entrega.setMotoristaId(null);
         int rows = entregaRepository.registarEntrega(entrega);
         if (rows == 0) {
             throw new ResponseStatusException(HttpStatusCode.valueOf(500),
@@ -52,5 +53,8 @@ public class EntregaService {
 }
     public void atualizar(EntregaDTO entrega){
         entregaRepository.update(entrega);
-    }    
+    }
+    public void atualizarMotorista(EntregaDTO entrega){
+        entregaRepository.updateIDMotorista(entrega);
+    }
 }

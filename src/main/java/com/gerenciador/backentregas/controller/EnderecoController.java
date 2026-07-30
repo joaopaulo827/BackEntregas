@@ -39,12 +39,12 @@ public class EnderecoController {
         String token = authHeader.replace("Bearer ", "");
         return enderecoService.listaEndereco(token);
     }
-    @PostMapping("/endereco/criar")
+    @PostMapping("/endereco/adicionarED")
     public String criarEntrega(@RequestBody EnderecoDTO enderecos, @RequestHeader("Authorization") String authHeader) {
         String token = authHeader.replace("Bearer ", "");
         UserDTO usuarioLogado = tokenService.extrairClaim(token);
-        enderecoService.novoEndereco(enderecos);
-        return "Nova entrega adcionado com sucesso";
+        enderecoService.novoEndereco(enderecos, usuarioLogado);
+        return "Novo endereco adcionado com sucesso";
     }
     @GetMapping("/endereco/{id}")
     public EnderecoDTO buscarEntrega(@PathVariable Long id) {

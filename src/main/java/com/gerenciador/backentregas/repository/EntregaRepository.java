@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Repository;
@@ -44,23 +45,32 @@ public List<EntregaDTO> listaEntregas() {
     }
         return lista;
 }
-    public int registarEntrega(EntregaDTO entrega) {
-         int linhas =0;
-        try {
-            Connection conn = Conexao.conectar();
-            PreparedStatement stmt = conn.prepareStatement("insert into entrega ( produto,descricao, status, endereco_id, motorista_id) values ( ?, ?, ?, ?, ?)");
-            stmt.setString(1, entrega.getProduto());
-            stmt.setString(2, entrega.getDescricao());
-            stmt.setString(3, entrega.getStatus());
-            stmt.setLong(4, entrega.getEnderecoId());
-            stmt.setLong(5, entrega.getMotoristaId());
+public int registarEntrega(EntregaDTO entrega) {
 
-              linhas = stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    int linhas = 0;
+    try {
+        Connection conn = Conexao.conectar();
+        PreparedStatement stmt = conn.prepareStatement(
+            "insert into entrega (produto, descricao, status, endereco_id, motorista_id) values (?, ?, ?, ?, ?)");
+        stmt.setString(1, entrega.getProduto());
+        stmt.setString(2, entrega.getDescricao());
+        stmt.setString(3, entrega.getStatus());
+        stmt.setLong(4, entrega.getEnderecoId());
+
+        if (entrega.getMotoristaId() == null) {
+            stmt.setNull(5, java.sql.Types.BIGINT);
+        } else {
+            stmt.setLong(5, entrega.getMotoristaId());
         }
-         return linhas;
+
+        linhas = stmt.executeUpdate();
+
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+
+    return linhas;
+}
     public EntregaDTO buscarPorId(Long id) {
         EntregaDTO entrega = null;
         try {
@@ -99,17 +109,33 @@ public List<EntregaDTO> listaEntregas() {
         int linhas =0;
      try {
             Connection conn = Conexao.conectar();
-            PreparedStatement stmt = conn.prepareStatement("update entrega set produto=?, descricao=?, status=?, endereco_id=?,motorista_id=? where id=?");
+            PreparedStatement stmt = conn.prepareStatement("update entrega set produto=?, descricao=?, status=?, endereco_id=? where id=?");
             stmt.setString(1, entrega.getProduto());
             stmt.setString(2, entrega.getDescricao());
             stmt.setString(3, entrega.getStatus());
             stmt.setLong(4, entrega.getEnderecoId());
-            stmt.setLong(5, entrega.getMotoristaId());
-            stmt.setLong(6, entrega.getId());
+            stmt.setLong(5, entrega.getId());
             linhas=stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         } 
      return linhas;
     }
+    public int updateIDMotorista(EntregaDTO entrega) {
+        int linhas = 0;
+        try {
+            Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement("UPDATE entrega SET motorista_id=? WHERE id=?");
+            if (entrega.getMotoristaId() == null) {
+                stmt.setNull(1, java.sql.Types.BIGINT);
+            } else {
+                stmt.setLong(1, entrega.getMotoristaId());
+            }
+            stmt.setLong(2, entrega.getId());
+            linhas = stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return linhas;
+    }    
 }
