@@ -74,6 +74,29 @@ public List<MotoDTO> listaMoto() {
     }
     return moto;
 }
+    public List<MotoDTO> buscarPorAtivo() {
+        List<MotoDTO> lista = new ArrayList<>();
+
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement stmt = 
+             conn.prepareStatement("SELECT * FROM motoristas WHERE status = ?");
+        ) {
+            stmt.setString(1, "ATIVO");
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    MotoDTO moto = new MotoDTO();
+                    moto.setId(rs.getLong("id"));
+                    moto.setNome(rs.getString("nome"));
+                    moto.setStatus(rs.getString("status"));
+                    lista.add(moto);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }    
     public int deleteById(long id){
         int linhas =0;
      try {

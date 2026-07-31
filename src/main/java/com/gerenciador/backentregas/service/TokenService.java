@@ -48,6 +48,7 @@ public class TokenService {
     }
 
     public UserDTO extrairClaim(String token) {
+        token = token.trim();
         Claims claims = Jwts.parser()
                 .verifyWith(getSignKey())
                 .build()
@@ -58,6 +59,7 @@ public class TokenService {
         user.setId(claims.get("id", Long.class));
         user.setNome(claims.get("nome", String.class));
         user.setRole(claims.get("role", String.class));
+
         return user;
     }
 

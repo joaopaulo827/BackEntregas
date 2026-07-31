@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,10 +27,8 @@ public class UserController {
 
     @PostMapping("/registrar")
     public String registrar(
-            @RequestBody UserDTO user,
-            @RequestHeader("Authorization") String token) {
-
-        userService.register(user, token);
+            @RequestBody UserDTO user) {
+         userService.register(user);
         return "Cadastro realizado com sucesso!";
     }
 

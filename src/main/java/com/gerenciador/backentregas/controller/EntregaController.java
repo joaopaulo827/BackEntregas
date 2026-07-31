@@ -56,10 +56,14 @@ public class EntregaController {
         entregaService.atualizar(entrega);
         return "Entrega atualizada com sucesso.";
     }
-
+    @PutMapping("/entrega/{id}/status")
+    public String editarStatus(@PathVariable Long id,@RequestBody EntregaDTO entrega) {
+        entrega.setId(id);
+        entregaService.atualizarStatus(entrega);
+        return "Status atualizado com sucesso.";
+    } 
     @PutMapping("/entrega/{id}/motorista")
-    public String editarMotorista(@PathVariable Long id,
-                                  @RequestBody EntregaDTO entrega) {
+    public String editarMotorista(@PathVariable Long id,@RequestBody EntregaDTO entrega) {
         entrega.setId(id);
         entregaService.atualizarMotorista(entrega);
         return "Motorista atualizado com sucesso.";

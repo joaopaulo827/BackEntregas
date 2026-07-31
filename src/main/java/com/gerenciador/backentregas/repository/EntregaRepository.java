@@ -109,18 +109,30 @@ public int registarEntrega(EntregaDTO entrega) {
         int linhas =0;
      try {
             Connection conn = Conexao.conectar();
-            PreparedStatement stmt = conn.prepareStatement("update entrega set produto=?, descricao=?, status=?, endereco_id=? where id=?");
+            PreparedStatement stmt = conn.prepareStatement("update entrega set produto=?, descricao=?, endereco_id=? where id=?");
             stmt.setString(1, entrega.getProduto());
             stmt.setString(2, entrega.getDescricao());
-            stmt.setString(3, entrega.getStatus());
-            stmt.setLong(4, entrega.getEnderecoId());
-            stmt.setLong(5, entrega.getId());
+            stmt.setLong(3, entrega.getEnderecoId());
+            stmt.setLong(4, entrega.getId());
             linhas=stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         } 
      return linhas;
     }
+    public int updateStatus(EntregaDTO entrega){
+        int linhas =0;
+     try {
+            Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement("update entrega set status=?  where id=?");
+            stmt.setString(1, entrega.getStatus());
+            stmt.setLong(2, entrega.getId());
+            linhas=stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } 
+     return linhas;
+    }    
     public int updateIDMotorista(EntregaDTO entrega) {
         int linhas = 0;
         try {

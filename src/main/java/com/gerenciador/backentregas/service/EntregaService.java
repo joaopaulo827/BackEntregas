@@ -54,6 +54,9 @@ public class EntregaService {
     public void atualizar(EntregaDTO entrega){
         entregaRepository.update(entrega);
     }
+    public void atualizarStatus(EntregaDTO entrega){
+        entregaRepository.updateStatus(entrega);
+    }    
     public void atualizarMotorista(EntregaDTO entrega){
         entregaRepository.updateIDMotorista(entrega);
     }
