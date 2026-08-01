@@ -59,4 +59,7 @@ public class MotoService {
         throw new ResponseStatusException(HttpStatusCode.valueOf(404), "Motorista não encontrado.");
         }     
     }
+    public List<MotoDTO> listarAtivos() {
+    return motoRepository.buscarPorAtivo();
+}
 }

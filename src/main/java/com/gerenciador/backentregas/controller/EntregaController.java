@@ -5,8 +5,10 @@
 package com.gerenciador.backentregas.controller;
 
 import com.gerenciador.backentregas.model.EntregaDTO;
+import com.gerenciador.backentregas.model.MotoDTO;
 import com.gerenciador.backentregas.model.UserDTO;
 import com.gerenciador.backentregas.service.EntregaService;
+import com.gerenciador.backentregas.service.MotoService;
 import com.gerenciador.backentregas.service.TokenService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class EntregaController {
     @Autowired
     private EntregaService entregaService;
+    @Autowired
+    private MotoService motoService;    
     @Autowired
     private TokenService tokenService;
     @GetMapping("/entrega")
@@ -55,6 +59,10 @@ public class EntregaController {
         entrega.setId(id);
         entregaService.atualizar(entrega);
         return "Entrega atualizada com sucesso.";
+    }
+    @GetMapping("/motorista/ativos")
+    public List<MotoDTO> listarAtivos() {
+        return motoService.listarAtivos();
     }
     @PutMapping("/entrega/{id}/status")
     public String editarStatus(@PathVariable Long id,@RequestBody EntregaDTO entrega) {
