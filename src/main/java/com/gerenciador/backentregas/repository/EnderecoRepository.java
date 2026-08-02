@@ -42,6 +42,29 @@ public List<EnderecoDTO> listaEndereco() {
     }
         return lista;
 }
+public List<EnderecoDTO> listaIdEndereco(Long id) {
+    List<EnderecoDTO> lista = new ArrayList<>();
+    try {
+        Connection conn = Conexao.conectar();
+        PreparedStatement stmt =null;
+        ResultSet rs = null;
+        stmt= conn.prepareStatement("SELECT * FROM endereco where id=?");
+        stmt.setLong(1, id);
+        rs= stmt.executeQuery();
+        while (rs.next()) {
+            EnderecoDTO enderecos = new EnderecoDTO();
+            enderecos.setId(rs.getLong("id"));
+            enderecos.setRua(rs.getString("rua"));
+            enderecos.setNumero(rs.getLong("numero"));
+            enderecos.setCidade(rs.getString("cidade"));
+            lista.add(enderecos);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+        return lista;
+}
     public int registarEndereco(EnderecoDTO enderecos) {
          int linhas =0;
         try {

@@ -10,7 +10,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Repository;
@@ -50,8 +49,7 @@ public int registarEntrega(EntregaDTO entrega) {
     int linhas = 0;
     try {
         Connection conn = Conexao.conectar();
-        PreparedStatement stmt = conn.prepareStatement(
-            "insert into entrega (produto, descricao, status, endereco_id, motorista_id) values (?, ?, ?, ?, ?)");
+        PreparedStatement stmt = conn.prepareStatement("insert into entrega (produto, descricao, status, endereco_id, motorista_id) values (?, ?, ?, ?, ?)");
         stmt.setString(1, entrega.getProduto());
         stmt.setString(2, entrega.getDescricao());
         stmt.setString(3, entrega.getStatus());

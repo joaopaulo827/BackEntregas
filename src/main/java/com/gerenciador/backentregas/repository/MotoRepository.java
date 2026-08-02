@@ -76,7 +76,6 @@ public List<MotoDTO> listaMoto() {
 }
     public List<MotoDTO> buscarPorAtivo() {
         List<MotoDTO> lista = new ArrayList<>();
-
         try (Connection conn = Conexao.conectar();
              PreparedStatement stmt = 
              conn.prepareStatement("SELECT * FROM motoristas WHERE status = ?");
