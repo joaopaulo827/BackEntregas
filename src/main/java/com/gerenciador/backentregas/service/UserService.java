@@ -54,6 +54,12 @@ public class UserService {
         }
 
         UserDTO loggedData = repository.login(user.getEmail(), user.getSenha());
+        if (loggedData == null) {
+    throw new ResponseStatusException(
+            HttpStatusCode.valueOf(401),
+            "E-mail ou senha inválidos."
+    );
+}
         return tokenService.gerarToken(loggedData);
     }
     public void atualizar(UserDTO user){
