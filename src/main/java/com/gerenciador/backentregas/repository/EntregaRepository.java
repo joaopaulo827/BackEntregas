@@ -5,6 +5,7 @@
 package com.gerenciador.backentregas.repository;
 
 
+import com.gerenciador.backentregas.model.EntEndDTO;
 import com.gerenciador.backentregas.model.EntregaDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -90,6 +91,38 @@ public int registarEntrega(EntregaDTO entrega) {
         e.printStackTrace();
     }
     return entrega;
+}
+public List<EntEndDTO> listaEntrElistarEnd() {
+    List<EntEndDTO> lista = new ArrayList<>();
+    try {
+    Connection conn = Conexao.conectar();
+    PreparedStatement stmt =null;
+    ResultSet rs = null;
+    stmt= conn.prepareStatement("SELECT e.id, " +
+            "e.produto, " +
+            "e.descricao, " +
+            "e.status, " +
+            "en.rua, " +
+            "m.nome AS motorista " +
+            "FROM entrega e " +
+            "JOIN endereco en ON e.endereco_id = en.id " +
+            "LEFT JOIN motoristas m ON e.motorista_id = m.id");
+        rs= stmt.executeQuery();
+        while (rs.next()) {
+        EntEndDTO entregas = new EntEndDTO();
+            entregas.setId(rs.getLong("id"));
+            entregas.setProduto(rs.getString("produto"));
+            entregas.setDescricao(rs.getString("descricao"));
+            entregas.setStatus(rs.getString("status"));
+            entregas.setRua(rs.getString("rua"));
+            entregas.setMotorista(rs.getString("motorista"));
+            lista.add(entregas);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+return lista;
 }
     public int deleteById(long id){
         int linhas =0;

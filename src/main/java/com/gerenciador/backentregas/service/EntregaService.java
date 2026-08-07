@@ -4,6 +4,7 @@
  */
 package com.gerenciador.backentregas.service;
 
+import com.gerenciador.backentregas.model.EntEndDTO;
 import com.gerenciador.backentregas.model.EntregaDTO;
 import com.gerenciador.backentregas.model.UserDTO;
 import com.gerenciador.backentregas.repository.EntregaRepository;
@@ -48,6 +49,13 @@ public class EntregaService {
             throw new ResponseStatusException(HttpStatusCode.valueOf(401), "Token inválido!");
         }
     }
+    public List<EntEndDTO> listaEntEnd(String authHeader) {
+        if (tokenService.validarToken(authHeader)) {
+            return entregaRepository.listaEntrElistarEnd();
+        } else {
+            throw new ResponseStatusException(HttpStatusCode.valueOf(401), "Token inválido!");
+        }
+    }    
     public EntregaDTO buscarPorId(Long id) {
     return entregaRepository.buscarPorId(id);
 }

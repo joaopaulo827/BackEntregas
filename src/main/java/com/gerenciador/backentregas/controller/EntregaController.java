@@ -4,6 +4,7 @@
  */
 package com.gerenciador.backentregas.controller;
 
+import com.gerenciador.backentregas.model.EntEndDTO;
 import com.gerenciador.backentregas.model.EntregaDTO;
 import com.gerenciador.backentregas.model.MotoDTO;
 import com.gerenciador.backentregas.model.UserDTO;
@@ -41,6 +42,13 @@ public class EntregaController {
         String token = authHeader.replace("Bearer ", "");
         return entregaService.listaEntrega(token);
     }
+    @GetMapping("/entrega/endereco")
+    public List<EntEndDTO> listaEntEnd(
+            @RequestHeader("Authorization") String authHeader) {
+
+        String token = authHeader.replace("Bearer ", "");
+        return entregaService.listaEntEnd(token);
+    }    
     @PostMapping("/entrega/criar")
     public String criarEntrega(@RequestBody EntregaDTO entregas, @RequestHeader("Authorization") String authHeader) {
         String token = authHeader.replace("Bearer ", "");
